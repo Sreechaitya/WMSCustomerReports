@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSourceRJW">
+      <DataSourceReference>DataSource_TMWLIVE</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>5aa5f5c6-834f-42fb-95bb-7ab292772dc0</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSetcmp">
+      <Query>
+        <DataSourceName>DataSourceRJW</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@StartDate">
+            <Value>=Parameters!StartDate.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@EndDate">
+            <Value>=Parameters!EndDate.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@Custid">
+            <Value>=Parameters!Custid.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>Select cmp_id,cmp_name,
+@StartDate SDate,
+@EndDate EDate
+ from TMW_LIVE..company  WHERE CMP_ID=@Custid</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="cmp_id">
+          <DataField>cmp_id</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="cmp_name">
+          <DataField>cmp_name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SDate">
+          <DataField>SDate</DataField>
+          <rd:TypeName>System.Object</rd:TypeName>
+        </Field>
+        <Field Name="EDate">
+          <DataField>EDate</DataField>
+          <rd:TypeName>System.Object</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Subreport Name="Subreport3">
+            <ReportName>WMSInboundExpensesrpt</ReportName>
+            <Parameters>
+              <Parameter Name="Custid">
+                <Value>=Parameters!Custid.Value</Value>
+              </Parameter>
+              <Parameter Name="StartDate">
+                <Value>=Parameters!StartDate.Value</Value>
+              </Parameter>
+              <Parameter Name="EndDate">
+                <Value>=Parameters!EndDate.Value</Value>
+              </Parameter>
+            </Parameters>
+            <Top>2.85292in</Top>
+            <Height>1.25in</Height>
+            <Width>3in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Textbox Name="Textbox1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!cmp_name.Value, "DataSetcmp")</Value>
+                    <Style>
+                      <FontSize>14pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Color>White</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>0.02653in</Top>
+            <Height>0.27083in</Height>
+            <Width>5.54167in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BackgroundColor>Gray</BackgroundColor>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Rectangle Name="Rectangle1">
+            <ReportItems>
+              <Subreport Name="Subreport1">
+                <ReportName>WMSCustCasecntrpt</ReportName>
+                <Parameters>
+                  <Parameter Name="Custid">
+                    <Value>=Parameters!Custid.Value</Value>
+                  </Parameter>
+                  <Parameter Name="StartDate">
+                    <Value>=Parameters!StartDate.Value</Value>
+                  </Parameter>
+                  <Parameter Name="EndDate">
+                    <Value>=Parameters!EndDate.Value</Value>
+                  </Parameter>
+                </Parameters>
+                <Height>0.84375in</Height>
+                <Width>3in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Subreport>
+            </ReportItems>
+            <PageBreak>
+              <BreakLocation>End</BreakLocation>
+              <Disabled>true</Disabled>
+            </PageBreak>
+            <KeepTogether>true</KeepTogether>
+            <Top>0.28347in</Top>
+            <Height>0.91667in</Height>
+            <Width>3in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Rectangle Name="Rectangle2">
+            <ReportItems>
+              <Subreport Name="Subreport2">
+                <ReportName>WMSOutboundExpensesrpt</ReportName>
+                <Parameters>
+                  <Parameter Name="Custid">
+                    <Value>=Parameters!Custid.Value</Value>
+                  </Parameter>
+                  <Parameter Name="StartDate">
+                    <Value>=Parameters!StartDate.Value</Value>
+                  </Parameter>
+                  <Parameter Name="EndDate">
+                    <Value>=Parameters!EndDate.Value</Value>
+                  </Parameter>
+                </Parameters>
+                <Height>1.26042in</Height>
+                <Width>3in</Width>
+                <Style>
+                  <Border>
+                    <Style>None</Style>
+                  </Border>
+                </Style>
+              </Subreport>
+            </ReportItems>
+            <PageBreak>
+              <BreakLocation>End</BreakLocation>
+              <Disabled>true</Disabled>
+            </PageBreak>
+            <KeepTogether>true</KeepTogether>
+            <Top>1.25569in</Top>
+            <Height>1.46875in</Height>
+            <Width>3in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+        </ReportItems>
+        <Height>4.12375in</Height>
+        <Style />
+      </Body>
+      <Width>5.54167in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="StartDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>6/1/2018 12:00:00 AM</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EndDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>12/31/2018 12:00:00 AM</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>End Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Custid">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>ODAWIN</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Custid</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>StartDate</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>EndDate</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>2</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Custid</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>f0409637-0ed7-4d9b-af2f-5c9e5450b88f</rd:ReportID>
+</Report>

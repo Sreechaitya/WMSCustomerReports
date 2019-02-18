@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <DataSourceReference>DataSourceSynapseLocal</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>e60ce155-65e1-410f-890f-c68333b15ea9</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Startdate">
+            <Value>=Parameters!startdate.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@Enddate">
+            <Value>=Parameters!Enddate.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>select name,
+custid,
+@Startdate as startdate,
+@Enddate as  enddate
+from cuStomer where custid IN ('KSFPAL','HYPPAL')</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="name">
+          <DataField>name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="custid">
+          <DataField>custid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="startdate">
+          <DataField>startdate</DataField>
+          <rd:TypeName>System.Object</rd:TypeName>
+        </Field>
+        <Field Name="enddate">
+          <DataField>enddate</DataField>
+          <rd:TypeName>System.Object</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DATE">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>SELECT DATEADD(DAY, -6-DATEPART(WEEKDAY, GETDATE()), GETDATE()) AS 'FirstDay of Last Week ',
+DATEADD(DAY,  0-DATEPART(WEEKDAY, GETDATE()), GETDATE()) AS 'Last Day of Last Week'</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="FirstDay_of_Last_Week_">
+          <DataField>FirstDay of Last Week </DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Last_Day_of_Last_Week">
+          <DataField>Last Day of Last Week</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Tablix Name="Tablix1">
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>1.11458in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.14583in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.17708in</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>0.5in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Image Name="Image1">
+                          <Source>Embedded</Source>
+                          <Value>RJWLogo</Value>
+                          <Sizing>FitProportional</Sizing>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Image>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.4in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="name">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!name.Value &amp; vbcrlf &amp; "Week No:" &amp; DatePart(dateinterval.WeekOfYear,Parameters!Enddate.Value)   &amp;  "Year:"&amp; DatePart(dateinterval.Year,Parameters!Enddate.Value)</Value>
+                                  <Style>
+                                    <FontSize>11pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>name</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox16">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Inbound</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox16</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Subreport Name="Subreport7">
+                          <ReportName>WMSInbound</ReportName>
+                          <Parameters>
+                            <Parameter Name="StartDate">
+                              <Value>=Fields!startdate.Value</Value>
+                            </Parameter>
+                            <Parameter Name="EndDate">
+                              <Value>=Fields!enddate.Value</Value>
+                            </Parameter>
+                            <Parameter Name="Custid">
+                              <Value>=Fields!custid.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <ColSpan>3</ColSpan>
+                        <rd:Selected>true</rd:Selected>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox10">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Outbound</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Subreport Name="Subreport8">
+                          <ReportName>WMSOutbound</ReportName>
+                          <Parameters>
+                            <Parameter Name="StartDate">
+                              <Value>=Fields!startdate.Value</Value>
+                            </Parameter>
+                            <Parameter Name="EndDate">
+                              <Value>=Fields!enddate.Value</Value>
+                            </Parameter>
+                            <Parameter Name="Custid">
+                              <Value>=Fields!custid.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Inventory</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>0.25in</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Subreport Name="Subreport1">
+                          <ReportName>WMSInventory</ReportName>
+                          <Parameters>
+                            <Parameter Name="StartDate">
+                              <Value>=Fields!startdate.Value</Value>
+                            </Parameter>
+                            <Parameter Name="EndDate">
+                              <Value>=Fields!enddate.Value</Value>
+                            </Parameter>
+                            <Parameter Name="Custid">
+                              <Value>=Fields!custid.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <ColSpan>3</ColSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell />
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <Group Name="Details" />
+                  <TablixMembers>
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+            <DataSetName>DataSet1</DataSetName>
+            <Height>2.4in</Height>
+            <Width>3.43749in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Tablix>
+        </ReportItems>
+        <Height>2.4in</Height>
+        <Style />
+      </Body>
+      <Width>3.45833in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="startdate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>DATE</DataSetName>
+          <ValueField>FirstDay_of_Last_Week_</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>StartDate</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Enddate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>DATE</DataSetName>
+          <ValueField>Last_Day_of_Last_Week</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>EndDate</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>1</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>startdate</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Enddate</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <CustomProperties>
+    <CustomProperty>
+      <Name>=Globals!ReportName</Name>
+      <Value>=Globals!ReportName &amp; DatePart(dateinterval.WeekOfYear,Parameters!startdate.Value)   &amp;  "Year:"&amp; DatePart(dateinterval.Year,Parameters!startdate.Value)</Value>
+    </CustomProperty>
+  </CustomProperties>
+  <EmbeddedImages>
+    <EmbeddedImage Name="RJWLogo">
+      <MIMEType>image/png</MIMEType>
+      <ImageData>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</ImageData>
+    </EmbeddedImage>
+  </EmbeddedImages>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>6131ad68-10d1-4b61-ad16-ebe03a736ef3</rd:ReportID>
+</Report>
